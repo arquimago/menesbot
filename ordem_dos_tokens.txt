@@ -1,0 +1,5 @@
+Telegram
+OAuth Consumer Key
+Secret Key
+Oauth token
+Oautg secret
