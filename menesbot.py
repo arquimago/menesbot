@@ -44,7 +44,7 @@ dispatcher.add_handler(start_handler)
 
 def getmene(bot, update):      
     messages = client.posts('sitedosmenes')
-    texto = messages["posts"][0]["summary"]
+    texto = messages["posts"][0]["caption"]
     texto = texto.strip("</p>")
     imagem = messages["posts"][0]["photos"][0]["original_size"]["url"]
     bot.send_photo(chat_id=update.message.chat_id, photo=imagem, caption=texto)
@@ -58,7 +58,7 @@ def mande(bot, update, args):
     if nome=="Arquimago":
         print("olá meu mestre")
         messages = client.posts('sitedosmenes')
-        texto = messages["posts"][postagem]["content_raw"]
+        texto = messages["posts"][postagem]["caption"]
         texto = texto.strip("</p>")
         imagem = messages["posts"][postagem]["photos"][0]["original_size"]["url"]
         bot.send_photo(chat_id="@canaldosmenes",photo=imagem,caption=texto)
@@ -93,7 +93,7 @@ def confere_menes(bot, job):
         arqUltimo = open('ultimo.txt','w')
         arqUltimo.write(ultimo)
         arqUltimo.close()
-        texto = messages["posts"][0]["content_raw"]                                                                              
+        texto = messages["posts"][0]["caption"]                                                                              
         imagem = messages["posts"][0]["photos"][0]["original_size"]["url"]                                                         
         bot.send_photo(chat_id="@canaldosmenes",photo=imagem,caption=texto)                                                        
         print("%s Canal tem novo mene!" % hora)
