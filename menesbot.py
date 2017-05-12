@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
+import re
 import time
 import oauth2
 import urllib.parse
@@ -45,7 +46,7 @@ dispatcher.add_handler(start_handler)
 def getmene(bot, update):      
     messages = client.posts('sitedosmenes')
     texto = messages["posts"][0]["caption"]
-    texto = texto.strip("</p>")
+    texto = re.sub('<[^<]+?>', '', texto)
     imagem = messages["posts"][0]["photos"][0]["original_size"]["url"]
     bot.send_photo(chat_id=update.message.chat_id, photo=imagem, caption=texto)
 
@@ -59,7 +60,7 @@ def mande(bot, update, args):
         print("olá meu mestre")
         messages = client.posts('sitedosmenes')
         texto = messages["posts"][postagem]["caption"]
-        texto = texto.strip("</p>")
+        texto = re.sub('<[^<]+?>', '', texto)
         imagem = messages["posts"][postagem]["photos"][0]["original_size"]["url"]
         bot.send_photo(chat_id="@canaldosmenes",photo=imagem,caption=texto)
         bot.sendMessage(chat_id=update.message.chat_id, text= "novo mene enviado")
@@ -94,7 +95,7 @@ def confere_menes(bot, job):
         arqUltimo.write(ultimo)
         arqUltimo.close()
         texto = messages["posts"][0]["caption"]                                                                              
-        texto = texto.strip("</p>")
+        texto = re.sub('<[^<]+?>', '', texto)
         imagem = messages["posts"][0]["photos"][0]["original_size"]["url"]                                                         
         bot.send_photo(chat_id="@canaldosmenes",photo=imagem,caption=texto)                                                        
         print("%s Canal tem novo mene!" % hora)
