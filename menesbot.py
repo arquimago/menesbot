@@ -30,10 +30,13 @@ client = pytumblr.TumblrRestClient(
                                     
 j = updater.job_queue
 
-ultimo = "https://tmblr.co/ZoQwWu2LUhN2S"
+
+arqUltimo = open('ultimo.txt','r')
+ultimo = arqUltimo.read()
+arqUltimo.close()
 
 def start(bot, update):      
-    bot.sendMessage(chat_id=update.message.chat_id, text="Este é o bot dos menes")
+    bot.sendMessage(chat_id=update.message.chat_id, text="Este é o bot dos menes, criado por @Arquimago para distribuir os menes automaticamente pelo @CanalDosMenes")
 
 
 start_handler = CommandHandler('start', start)                   
@@ -84,13 +87,16 @@ def confere_menes(bot, job):
     if ultimo == messages["posts"][0]["short_url"]:
         print("%s teste executado e não teve atualização" % hora)
     else:
-        ultimo = messages["posts"][0]["short_url"]                                                                                 
+        ultimo = messages["posts"][0]["short_url"]
+        arqUltimo = open('ultimo.txt','w')
+        arqUltimo.write(ultimo)
+        arqUltimo.close()
         texto = messages["posts"][0]["summary"]                                                                                    
         imagem = messages["posts"][0]["photos"][0]["original_size"]["url"]                                                         
         bot.send_photo(chat_id="@canaldosmenes",photo=imagem,caption=texto)                                                        
         print("%s Canal tem novo mene!" % hora)
 
-job_minute = Job(confere_menes, 60.0)
-j.put(job_minute, next_t=0.0)
+job_confere_menes = Job(confere_menes, 60.0)
+j.put(job_confere_menes, next_t=0.0)
 
 updater.start_polling()
