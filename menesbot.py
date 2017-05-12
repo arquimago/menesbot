@@ -94,6 +94,7 @@ def confere_menes(bot, job):
         arqUltimo.write(ultimo)
         arqUltimo.close()
         texto = messages["posts"][0]["caption"]                                                                              
+        texto = texto.strip("</p>")
         imagem = messages["posts"][0]["photos"][0]["original_size"]["url"]                                                         
         bot.send_photo(chat_id="@canaldosmenes",photo=imagem,caption=texto)                                                        
         print("%s Canal tem novo mene!" % hora)
