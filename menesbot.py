@@ -59,6 +59,7 @@ start_handler = CommandHandler('start', start)
 dispatcher.add_handler(start_handler)                                                              
 
 def getmene(bot, update):      
+    global ultimos
     texto = ultimos[0]
     imagem = ultimos[1]
     bot.send_photo(chat_id=update.message.chat_id, photo=imagem, caption=texto)
