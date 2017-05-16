@@ -40,6 +40,7 @@ messages = client.posts('sitedosmenes')
 for i in range(0,20):
     texto = messages["posts"][i]["caption"]
     texto = re.sub('<[^<]+?>', '', texto)
+    texto = re.sub('\n', '', texto)
     texto += '\n'
     texto += messages["posts"][i]["photos"][0]["original_size"]["url"]
     texto += '\n'
@@ -61,10 +62,7 @@ dispatcher.add_handler(start_handler)
 def getmene(bot, update):      
     global ultimos
     texto = ultimos[0]
-    print(texto)
     imagem = ultimos[1]
-    print(imagem)
-    print(ultimos)
     bot.send_photo(chat_id=update.message.chat_id, photo=imagem, caption=texto)
 
 getmene_handler = CommandHandler('getmene', getmene)                   
