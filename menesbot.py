@@ -81,7 +81,7 @@ def mande(bot, update, args):
         bot.sendMessage(chat_id=update.message.chat_id, text = "usuario não autorizado!")
         texto = nome + " tentou usar o bot indevidamente"
         print(texto)
-		
+        
 mande_handler = CommandHandler('mande', mande)                   
 dispatcher.add_handler(mande_handler)
 
@@ -99,6 +99,7 @@ dispatcher.add_handler(getultimo_handler)
 def confere_menes(bot, job):
     messages = client.posts('sitedosmenes')
     global ultimo
+    global ultimos
     hora = time.strftime("%c")
     if ultimo == messages["posts"][0]["short_url"]:
         print("%s teste executado e não teve atualização" % hora)
