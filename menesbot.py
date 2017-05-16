@@ -63,6 +63,8 @@ def getmene(bot, update):
     texto = ultimos[0]
     print(texto)
     imagem = ultimos[1]
+    print(imagem)
+    print(ultimos)
     bot.send_photo(chat_id=update.message.chat_id, photo=imagem, caption=texto)
 
 getmene_handler = CommandHandler('getmene', getmene)                   
