@@ -40,7 +40,7 @@ messages = client.posts('sitedosmenes')
 for i in range(0,20):
     texto = messages["posts"][i]["caption"]
     texto = re.sub('<[^<]+?>', '', texto)
-    texto = re.sub('\n', '', texto)
+    texto = re.sub('\n', ' ', texto)
     texto += '\n'
     texto += messages["posts"][i]["photos"][0]["original_size"]["url"]
     texto += '\n'
