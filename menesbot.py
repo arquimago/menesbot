@@ -35,6 +35,21 @@ j = updater.job_queue
 arqUltimo = open('ultimo.txt','r')
 ultimo = arqUltimo.read()
 arqUltimo.close()
+arqUltimos = open('ultimos.txt','w')
+messages = client.posts('sitedosmenes')
+for i in range(0,20):
+    texto = messages["posts"][i]["caption"]
+    texto = re.sub('<[^<]+?>', '', texto)
+    texto += '\n'
+    texto += messages["posts"][i]["photos"][0]["original_size"]["url"]
+    texto += '\n'
+    arqUltimos.write(texto)
+arqUltimos.close()
+arqUltimos = open('ultimos.txt','r')
+ultimos = arqUltimos.readlines()
+for i in range(0,len(ultimos)):
+    ultimos[i] = ultimos[i].strip('\n')
+arqUltimos.close()
 
 def start(bot, update):      
     bot.sendMessage(chat_id=update.message.chat_id, text="Este é o bot dos menes, criado por @Arquimago para distribuir os menes automaticamente pelo @CanalDosMenes")
@@ -44,10 +59,8 @@ start_handler = CommandHandler('start', start)
 dispatcher.add_handler(start_handler)                                                              
 
 def getmene(bot, update):      
-    messages = client.posts('sitedosmenes')
-    texto = messages["posts"][0]["caption"]
-    texto = re.sub('<[^<]+?>', '', texto)
-    imagem = messages["posts"][0]["photos"][0]["original_size"]["url"]
+    texto = ultimos[0]
+    imagem = ultimos[1]
     bot.send_photo(chat_id=update.message.chat_id, photo=imagem, caption=texto)
 
 getmene_handler = CommandHandler('getmene', getmene)                   
@@ -94,6 +107,20 @@ def confere_menes(bot, job):
         arqUltimo = open('ultimo.txt','w')
         arqUltimo.write(ultimo)
         arqUltimo.close()
+        arqUltimos = open('ultimos.txt', 'w')
+        for i in range(0,20):
+            texto = messages["posts"][i]["caption"]
+            texto = re.sub('<[^<]+?>', '', texto)
+            texto += '\n'
+            texto += messages["posts"][i]["photos"][0]["original_size"]["url"]
+            texto += '\n'
+            arqUltimos.write(texto)
+        arqUltimos.close()
+        arqUltimos = open('ultimos.txt','r')
+        ultimos = arqUltimos.readlines()
+        for i in range(0,len(ultimos)):
+            ultimos[i] = ultimos[i].strip('\n')
+        arqUltimos.close()
         texto = messages["posts"][0]["caption"]                                                                              
         texto = re.sub('<[^<]+?>', '', texto)
         imagem = messages["posts"][0]["photos"][0]["original_size"]["url"]                                                         
