@@ -63,29 +63,14 @@ def getmene(bot, update):
     global ultimos
     texto = ultimos[0]
     imagem = ultimos[1]
-    bot.send_photo(chat_id=update.message.chat_id, photo=imagem, caption=texto)
+    if len(texto) < 200:
+        bot.send_photo(chat_id=update.message.chat_id, photo=imagem, caption=texto)
+    else:
+        bot.send_photo(chat_id=update.message.chat_id, photo=imagem)
+        bot.sendMessage(chat_id=update.message.chat_id, text=texto)
 
 getmene_handler = CommandHandler('getmene', getmene)                   
 dispatcher.add_handler(getmene_handler)
-
-def mande(bot, update, args):
-    nome=update.message.from_user.username
-    postagem = ' '.join(args)
-    if nome=="Arquimago":
-        print("olá meu mestre")
-        messages = client.posts('sitedosmenes')
-        texto = messages["posts"][postagem]["caption"]
-        texto = re.sub('<[^<]+?>', '', texto)
-        imagem = messages["posts"][postagem]["photos"][0]["original_size"]["url"]
-        bot.send_photo(chat_id="@canaldosmenes",photo=imagem,caption=texto)
-        bot.sendMessage(chat_id=update.message.chat_id, text= "novo mene enviado")
-    else:
-        bot.sendMessage(chat_id=update.message.chat_id, text = "usuario não autorizado!")
-        texto = nome + " tentou usar o bot indevidamente"
-        print(texto)
-        
-mande_handler = CommandHandler('mande', mande)                   
-dispatcher.add_handler(mande_handler)
 
 def getultimo(bot,update):
     nome=update.message.from_user.username
@@ -127,7 +112,11 @@ def confere_menes(bot, job):
         texto = messages["posts"][0]["caption"]                                                                              
         texto = re.sub('<[^<]+?>', '', texto)
         imagem = messages["posts"][0]["photos"][0]["original_size"]["url"]                                                         
-        bot.send_photo(chat_id="@canaldosmenes",photo=imagem,caption=texto)                                                        
+        if len(texto) < 200:
+            bot.send_photo(chat_id="@canaldosmenes",photo=imagem,caption=texto)
+        else:
+            bot.send_photo(chat_id="@canaldosmenes",photo=imagem)
+            bot.sendMessage(chat_id="@canaldosmenes",text=texto)
         print("%s Canal tem novo mene!" % hora)
 
 job_confere_menes = Job(confere_menes, 60.0)
