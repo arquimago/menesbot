@@ -59,6 +59,13 @@ def start(bot, update):
 start_handler = CommandHandler('start', start)                   
 dispatcher.add_handler(start_handler)                                                              
 
+def git(bot, update):
+    bot.sendMessage(chat_id=update.message.chat_id, text="O código deste bot se encontra em http://github.com/arquimago/menesbot")
+
+git_handler = CommandHandler('git', git)                   
+dispatcher.add_handler(git_handler)                                                              
+
+
 def getmene(bot, update):      
     global ultimos
     texto = ultimos[0]
