@@ -6,6 +6,7 @@ import time
 import oauth2
 import urllib.parse
 import pytumblr
+import html
 from telegram.ext import CommandHandler
 from telegram.ext import MessageHandler, Filters
 from telegram.ext import Updater
@@ -44,6 +45,7 @@ for i in range(0,20):
     texto += '\n'
     texto += messages["posts"][i]["photos"][0]["original_size"]["url"]
     texto += '\n'
+    texto = html.unescape(texto)
     arqUltimos.write(texto)
 arqUltimos.close()
 arqUltimos = open('ultimos.txt','r')
@@ -109,6 +111,7 @@ def confere_menes(bot, job):
             texto += '\n'
             texto += messages["posts"][i]["photos"][0]["original_size"]["url"]
             texto += '\n'
+            texto = html.unescape(texto)
             arqUltimos.write(texto)
         arqUltimos.close()
         arqUltimos = open('ultimos.txt','r')
@@ -118,6 +121,7 @@ def confere_menes(bot, job):
         arqUltimos.close()
         texto = messages["posts"][0]["caption"]                                                                              
         texto = re.sub('<[^<]+?>', '', texto)
+        texto = html.unescape(texto)
         imagem = messages["posts"][0]["photos"][0]["original_size"]["url"]                                                         
         if len(texto) < 200:
             bot.send_photo(chat_id="@canaldosmenes",photo=imagem,caption=texto)
