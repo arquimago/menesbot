@@ -130,7 +130,6 @@ def confere_menes(bot, job):
             bot.sendMessage(chat_id="@canaldosmenes",text=texto)
         print("%s Canal tem novo mene!" % hora)
 
-#job_confere_menes = Job(confere_menes, 60.0)
-j.run_repeating(confere_menes, 60, first=0)
+j.run_repeating(confere_menes, 60.0, first=0)
 
 updater.start_polling()
