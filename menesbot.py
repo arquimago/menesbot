@@ -96,40 +96,40 @@ def confere_menes(bot, job):
     messages = client.posts('sitedosmenes')
     global ultimo
     global ultimos
-    hora = time.strftime("%c")
-    if ultimo == messages["posts"][0]["short_url"]:
-        print("%s teste executado e não teve atualização" % hora)
-    else:
-        ultimo = messages["posts"][0]["short_url"]
-        arqUltimo = open('ultimo.txt','w')
-        arqUltimo.write(ultimo)
-        arqUltimo.close()
-        arqUltimos = open('ultimos.txt', 'w')
-        for i in range(0,20):
-            texto = messages["posts"][i]["caption"]
-            texto = re.sub('<[^<]+?>', '', texto)
-            texto += '\n'
-            texto += messages["posts"][i]["photos"][0]["original_size"]["url"]
-            texto += '\n'
-            texto = html.unescape(texto)
-            arqUltimos.write(texto)
-        arqUltimos.close()
-        arqUltimos = open('ultimos.txt','r')
-        ultimos = arqUltimos.readlines()
-        for i in range(0,len(ultimos)):
-            ultimos[i] = ultimos[i].strip('\n')
-        arqUltimos.close()
-        texto = messages["posts"][0]["caption"]                                                                              
-        texto = re.sub('<[^<]+?>', '', texto)
-        texto = html.unescape(texto)
-        imagem = messages["posts"][0]["photos"][0]["original_size"]["url"]                                                         
-        if len(texto) < 200:
-            bot.send_photo(chat_id="@canaldosmenes",photo=imagem,caption=texto)
-        else:
-            bot.send_photo(chat_id="@canaldosmenes",photo=imagem)
-            bot.sendMessage(chat_id="@canaldosmenes",text=texto)
-        print("%s Canal tem novo mene!" % hora)
+    
+    ultimo = messages["posts"][0]["short_url"]
+    arqUltimo = open('ultimo.txt','w')
+	arqUltimo.write(ultimo)
+	arqUltimo.close()
+	arqUltimos = open('ultimos.txt', 'w')
+	for i in range(0,20):
+		texto = messages["posts"][i]["caption"]
+		texto = re.sub('<[^<]+?>', '', texto)
+		texto += '\n'
+		texto += messages["posts"][i]["photos"][0]["original_size"]["url"]
+		texto += '\n'
+		texto = html.unescape(texto)
+		arqUltimos.write(texto)
+	arqUltimos.close()
+	arqUltimos = open('ultimos.txt','r')
+	ultimos = arqUltimos.readlines()
+	for i in range(0,len(ultimos)):
+		ultimos[i] = ultimos[i].strip('\n')
+	arqUltimos.close()
+	texto = messages["posts"][0]["caption"]                                                                            
+	texto = re.sub('<[^<]+?>', '', texto)
+	texto = html.unescape(texto)
+	imagem = messages["posts"][0]["photos"][0]["original_size"]["url"]                                                         
+	if len(texto) < 200:
+		bot.send_photo(chat_id="@canaldosmenes",photo=imagem,caption=texto)
+	else:
+		bot.send_photo(chat_id="@canaldosmenes",photo=imagem)
+		bot.sendMessage(chat_id="@canaldosmenes",text=texto)
+	novo_mene = time.strftime("%c") + " Canal tem novo mene\n"
+	arqLog = open('atividades.log','a')
+	arqLog.write(novo_mene)
+	arqLog.close()
 
-j.run_repeating(confere_menes, 60.0, first=0)
+j.run_repeating(confere_menes, 45.0, first=0)
 
 updater.start_polling()
