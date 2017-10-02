@@ -95,12 +95,12 @@ def confere_menes(bot, job):
 	global ultimo
 	global ultimos
 	hora = time.strftime("%c")
-	if ultimo == messages["posts"][0]["short_url"]:
-		novo_mene = time.strftime("%c") + " Atualizado sem novos menes\n"
-		arqLog = open('atividades.log','a')
-		arqLog.write(novo_mene)
-		arqLog.close()
-	else:
+	if ultimo != messages["posts"][0]["short_url"]:
+		#novo_mene = time.strftime("%c") + " Atualizado sem novos menes\n"
+		#arqLog = open('atividades.log','a')
+		#arqLog.write(novo_mene)
+		#arqLog.close()
+	#else:
 		#Guarda o indice da ultima enviada
 		indice = 20
 		for i in range(0,20):
